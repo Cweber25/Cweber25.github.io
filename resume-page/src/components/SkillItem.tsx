@@ -14,21 +14,16 @@ export default function SkillItem({ name, level, index }: SkillItemProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="card p-6 rounded-lg"
+      className="bg-white/5 backdrop-blur-sm rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300"
     >
-      <div className="flex flex-col space-y-2">
-        <div className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{name}</h3>
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{level}%</span>
-        </div>
-        <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${level}%` }}
-            transition={{ duration: 1, delay: index * 0.1 }}
-            className="skill-progress h-full rounded-full"
-          />
-        </div>
+      <h3 className="text-high-contrast font-medium mb-2">{name}</h3>
+      <div className="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <motion.div
+          className="absolute top-0 left-0 h-full bg-primary rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${level}%` }}
+          transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
+        />
       </div>
     </motion.div>
   )

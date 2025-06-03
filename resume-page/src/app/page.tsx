@@ -1,13 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { BriefcaseIcon, AcademicCapIcon, CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
 import ResumeSection from '../components/ResumeSection'
 import ExperienceItem from '../components/ExperienceItem'
 import SkillItem from '../components/SkillItem'
 import SectionNavigation from '../components/SectionNavigation'
 import SectionIndicator from '../components/SectionIndicator'
+import MorphingBlobs from '../components/MorphingBlobs'
+import AboutSection from '../components/AboutSection'
 
 const sections = ['hero', 'about', 'experience', 'skills', 'education', 'projects']
 
@@ -17,17 +19,41 @@ const skills = [
   { name: 'JavaScript', level: 85 },
   { name: 'Node.js', level: 80 },
   { name: 'SQL', level: 80 },
-  { name: 'HTML', level: 85 },
-  { name: 'PHP', level: 75 },
+  { name: 'HTML/CSS', level: 85 },
+  { name: 'TypeScript', level: 80 },
+  { name: 'React', level: 85 },
+  { name: 'Git', level: 85 },
   { name: 'Information Security', level: 80 },
-  { name: 'Git', level: 85 }
+  { name: 'Problem Solving', level: 90 },
+  { name: 'Team Leadership', level: 85 }
 ]
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [lastScrollTime, setLastScrollTime] = useState(0)
 
-  const navigateToSection = (index: number) => {
+  // Add initialization effect
+  useEffect(() => {
+    // Scroll to top on mount
+    window.scrollTo(0, 0)
+    
+    // Force scroll to hero section
+    const heroSection = document.getElementById('hero')
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'instant' })
+    }
+
+    // Prevent default scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
+    }
+
+    // Reset to first section
+    setCurrentSection(0)
+  }, [])
+
+  const navigateToSection = useCallback((index: number) => {
     if (isTransitioning) return
     setIsTransitioning(true)
     setCurrentSection(index)
@@ -35,20 +61,20 @@ export default function Home() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
-    setTimeout(() => setIsTransitioning(false), 1000)
-  }
+    setTimeout(() => setIsTransitioning(false), 600)
+  }, [isTransitioning])
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (currentSection > 0) {
       navigateToSection(currentSection - 1)
     }
-  }
+  }, [currentSection, navigateToSection])
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentSection < sections.length - 1) {
       navigateToSection(currentSection + 1)
     }
-  }
+  }, [currentSection, navigateToSection, sections.length])
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -61,19 +87,96 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [currentSection])
+  }, [handleNext, handlePrevious])
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    const scrollThreshold = 30
+    const scrollCooldown = 400
+
+    const handleScroll = (e: WheelEvent) => {
+      e.preventDefault()
+      
+      const now = Date.now()
+      if (now - lastScrollTime < scrollCooldown) return
+      
+      const deltaY = e.deltaY
+      const scrollDistance = Math.abs(deltaY)
+      
+      if (scrollDistance > scrollThreshold) {
+        if (deltaY > 0) {
+          handleNext()
+        } else {
+          handlePrevious()
+        }
+        setLastScrollTime(now)
+      }
+    }
+
+    // Prevent default scroll behavior
+    const preventScroll = (e: WheelEvent) => {
+      e.preventDefault()
+    }
+
+    window.addEventListener('wheel', handleScroll, { passive: false })
+    window.addEventListener('wheel', preventScroll, { passive: false })
+    
+    return () => {
+      window.removeEventListener('wheel', handleScroll)
+      window.removeEventListener('wheel', preventScroll)
+    }
+  }, [handleNext, handlePrevious, lastScrollTime])
+
+  // Optimize touch handling
+  useEffect(() => {
+    let touchStartY = 0
+    const touchThreshold = 30
+    const touchCooldown = 400
+    
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY
+    }
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault()
+      
+      const now = Date.now()
+      if (now - lastScrollTime < touchCooldown) return
+      
+      const touchEndY = e.touches[0].clientY
+      const deltaY = touchEndY - touchStartY
+      
+      if (Math.abs(deltaY) > touchThreshold) {
+        if (deltaY < 0) {
+          handleNext()
+        } else {
+          handlePrevious()
+        }
+        setLastScrollTime(now)
+        touchStartY = touchEndY
+      }
+    }
+    
+    window.addEventListener('touchstart', handleTouchStart)
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+    
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+    }
+  }, [handleNext, handlePrevious, lastScrollTime])
 
   const sectionStyle = (index: number): React.CSSProperties => ({
     height: '100vh',
     opacity: currentSection === index ? 1 : 0,
     pointerEvents: currentSection === index ? 'auto' : 'none',
-    transition: 'opacity 0.5s ease-in-out',
+    transition: 'opacity 0.4s ease-in-out',
     position: 'relative',
     overflow: 'hidden'
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-gray-50 dark:from-[#0A1612] dark:to-[#0F1F1B]">
+    <div className="min-h-screen bg-gradient-to-br from-white to-gray-50 dark:from-[#0A1612] dark:to-[#0F1F1B] overflow-hidden">
       <SectionNavigation
         onPrevious={handlePrevious}
         onNext={handleNext}
@@ -88,73 +191,123 @@ export default function Home() {
       />
 
       {/* Hero Section */}
-      <section id="hero" style={sectionStyle(0)} className="hero-gradient flex items-center justify-center px-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: currentSection === 0 ? 1 : 0, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-center"
+      <section id="hero" style={sectionStyle(0)} className="relative min-h-screen overflow-hidden bg-gray-900">
+        {/* Morphing Blobs Background */}
+        {currentSection === 0 && (
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
+            <MorphingBlobs />
+          </div>
+        )}
+        
+        {/* Content Container */}
+        <div className="relative z-30 min-h-screen flex flex-col items-center justify-center px-4">
+          {/* Name and Title */}
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="text-center mb-12"
+            style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           >
-            <h1 className="text-3xl sm:text-5xl font-bold text-high-contrast mb-4">
+            <h1 className="text-6xl sm:text-7xl font-bold text-white mb-4">
               Cole Weber
             </h1>
-            <p className="text-lg sm:text-xl font-medium text-medium-contrast mb-6">
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="h-1 w-32 bg-white mx-auto mb-6 origin-center"
+              style={{ willChange: 'transform' }}
+            />
+            <motion.h2
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="text-2xl sm:text-3xl font-medium text-white/90"
+            >
               Software Engineer
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <a
-                href="mailto:Cweber8@ashland.edu"
-                className="button flex items-center text-sm"
-              >
-                <EnvelopeIcon className="h-4 w-4 mr-2" />
+              <span className="inline-block ml-2 animate-pulse">|</span>
+            </motion.h2>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+            style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+          >
+            <motion.a
+              whileHover={{ scale: 1.02, translateY: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              href="mailto:Cweber8@ashland.edu"
+              className="bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-full flex items-center text-lg font-medium shadow-lg hover:shadow-xl"
+              style={{ willChange: 'transform' }}
+            >
+              <span className="flex items-center">
+                <EnvelopeIcon className="h-5 w-5 mr-2" />
                 Contact Me
-              </a>
-              <a
-                href="https://www.linkedin.com/in/ColeW8"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button flex items-center text-sm"
-              >
-                <LinkIcon className="h-4 w-4 mr-2" />
+              </span>
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.02, translateY: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              href="https://www.linkedin.com/in/ColeW8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-full flex items-center text-lg font-medium shadow-lg hover:shadow-xl"
+              style={{ willChange: 'transform' }}
+            >
+              <span className="flex items-center">
+                <LinkIcon className="h-5 w-5 mr-2" />
                 LinkedIn
-              </a>
-              <a
-                href="https://github.com/Cweber25"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button flex items-center text-sm"
-              >
-                <CodeBracketIcon className="h-4 w-4 mr-2" />
+              </span>
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.02, translateY: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              href="https://github.com/Cweber25"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-full flex items-center text-lg font-medium shadow-lg hover:shadow-xl"
+              style={{ willChange: 'transform' }}
+            >
+              <span className="flex items-center">
+                <CodeBracketIcon className="h-5 w-5 mr-2" />
                 GitHub
-              </a>
-            </div>
+              </span>
+            </motion.a>
+          </motion.div>
+
+          {/* Scroll Indicator */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-center"
+          >
+            <p className="text-sm mb-2">Scroll to explore</p>
+            <motion.div
+              animate={{ translateY: [0, 8, 0] }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="w-1 h-8 bg-white/30 rounded-full mx-auto"
+              style={{ willChange: 'transform' }}
+            />
           </motion.div>
         </div>
       </section>
 
       {/* About Section */}
       <section id="about" style={sectionStyle(1)} className="flex items-center justify-center px-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: currentSection === 1 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="section-title mb-6">About Me</h2>
-            <div className="card p-6 rounded-xl">
-              <p className="text-lg mb-4">
-                I am a Computer Science student at Ashland University, specializing in software engineering and cyber security. With hands-on experience in information security and a strong foundation in various programming languages, I combine technical expertise with practical problem-solving skills.
-              </p>
-              <p className="text-lg mb-4">
-                As a Varsity Esports Captain and ACM Club Team Lead, I've developed strong leadership and collaboration skills. My experience ranges from securing enterprise environments at Mettler Toledo to developing web applications and game projects.
-              </p>
-              <p className="text-lg">
-                I'm passionate about creating secure, efficient solutions and continuously expanding my knowledge in software development and information security.
-              </p>
-            </div>
-          </motion.div>
-        </div>
+        <AboutSection isVisible={currentSection === 1} />
       </section>
 
       {/* Experience Section */}
@@ -215,9 +368,10 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: currentSection === 3 ? 1 : 0 }}
             transition={{ duration: 0.5 }}
+            className="w-full"
           >
             <h2 className="section-title mb-6">Technical Skills</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto pr-2">
               {skills.map((skill, index) => (
                 <SkillItem
                   key={skill.name}

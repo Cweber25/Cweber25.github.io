@@ -16,6 +16,8 @@
   --card-border: rgba(0, 0, 0, 0.1);
   --heading-color: #1B4D3E;
   --description-text: #2F4F4F;
+  --color-primary-rgb: 34, 197, 94;  /* green-500 */
+  --color-secondary-rgb: 16, 185, 129;  /* emerald-500 */
 }
 
 .dark {
