@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { AcademicCapIcon, CodeBracketIcon, UserGroupIcon, RocketLaunchIcon } from '@heroicons/react/24/outline'
 
 interface AboutSectionProps {
@@ -11,15 +12,15 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
   const aboutCards = [
     {
       icon: AcademicCapIcon,
-      title: "Education & Focus",
-      content: "Computer Science student at Ashland University, specializing in software engineering and cyber security.",
-      highlight: "Expected graduation: May 2024"
+      title: "Education",
+      content: "Graduated with a Bachelor's of Science in Computer Science from Ashland University and a minor in Cybersecurity.",
+      highlight: "Graduated: May 2024"
     },
     {
       icon: CodeBracketIcon,
-      title: "Technical Background",
-      content: "Strong foundation in various programming languages with hands-on experience in information security.",
-      highlight: "Full-stack development & Security"
+      title: "Certifications",
+      content: "Microsoft Certified: Azure Fundamentals and Agile SAFe certified. Currently pursuing AWS Cloud Practitioner certification.",
+      highlight: "Azure & Agile Certified"
     },
     {
       icon: UserGroupIcon,
@@ -30,8 +31,8 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
     {
       icon: RocketLaunchIcon,
       title: "Goals & Passion",
-      content: "Passionate about creating secure, efficient solutions and continuously expanding knowledge in software development.",
-      highlight: "Security & Innovation"
+      content: "Passionate about creating new and innovative solutions to problems. I'm always looking for new challenges and opportunities to learn and grow.",
+      highlight: "Innovation & Problem Solving"
     }
   ]
 
@@ -51,11 +52,18 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: isVisible ? 1 : 0, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative aspect-square md:aspect-auto md:col-span-1 overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center"
+            className="relative md:col-span-1 flex items-center justify-center"
           >
-            <div className="text-6xl font-bold text-primary/20">CW</div>
-            {/* Add your profile image here */}
-            {/* <Image src="/path-to-your-image.jpg" alt="Cole Weber" fill className="object-cover" /> */}
+            <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 bg-gradient-to-br from-primary/10 to-secondary/10">
+              <Image
+                src="/images/headshot.jpg"
+                alt="Cole Weber"
+                width={400}
+                height={400}
+                className="transition-all duration-300 hover:scale-[1.02]"
+                priority
+              />
+            </div>
           </motion.div>
 
           {/* Main Description */}
@@ -63,22 +71,22 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: isVisible ? 1 : 0, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="md:col-span-2 card p-6 rounded-xl flex flex-col justify-center"
+            className="md:col-span-2 card p-8 rounded-xl flex flex-col"
           >
-            <h3 className="text-2xl font-bold text-high-contrast mb-4">
-              Software Engineer & Security Enthusiast
+            <h3 className="text-3xl font-bold text-high-contrast mb-6">
+              Full-Stack Engineer & Security Enthusiast
             </h3>
-            <p className="text-lg text-medium-contrast mb-4">
-              I am a Computer Science student with a focus on creating secure and efficient software solutions. My experience spans from enterprise security to full-stack development, always emphasizing best practices and innovation.
+            <p className="text-xl leading-relaxed text-medium-contrast mb-8">
+              I'm a Full Stack Engineer at CVS Health, currently part of the Infrastructure Software Engineering Program (ISEP). I focus on backend development and automation, building internal tools and scalable systems that streamline infrastructure workflows and enhance the developer experience. My work spans technologies like Python, GitHub Actions, and Ansible, with a strong emphasis on improving internal platforms. I'm especially passionate about creating solutions that reduce developer toil and enable teams to ship faster with confidence.            
             </p>
-            <div className="flex flex-wrap gap-3">
-              <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+            <div className="flex flex-wrap gap-4">
+              <span className="px-4 py-2 bg-[#3d4b61]/20 text-white rounded-full text-base font-medium">
                 Software Development
               </span>
-              <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                Cyber Security
+              <span className="px-4 py-2 bg-[#3d4b61]/20 text-white rounded-full text-base font-medium">
+                Automation
               </span>
-              <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+              <span className="px-4 py-2 bg-[#3d4b61]/20 text-white rounded-full text-base font-medium">
                 Team Leadership
               </span>
             </div>
@@ -93,16 +101,16 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isVisible ? 1 : 0, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-              className="card p-6 rounded-xl hover:shadow-lg transition-shadow duration-300"
+              className="card py-4 px-6 rounded-xl hover:shadow-lg transition-shadow duration-300"
             >
               <div className="flex items-start space-x-4">
-                <div className="p-3 bg-primary/10 rounded-xl">
-                  <card.icon className="w-6 h-6 text-primary" />
+                <div className="p-2.5 bg-[#3d4b61]/20 rounded-xl">
+                  <card.icon className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-high-contrast mb-2">{card.title}</h3>
-                  <p className="text-medium-contrast mb-3">{card.content}</p>
-                  <p className="text-sm font-medium text-primary">{card.highlight}</p>
+                  <h3 className="text-lg font-semibold text-high-contrast mb-1.5">{card.title}</h3>
+                  <p className="text-medium-contrast mb-2 text-sm leading-relaxed">{card.content}</p>
+                  <p className="text-sm font-medium text-white/80">{card.highlight}</p>
                 </div>
               </div>
             </motion.div>
