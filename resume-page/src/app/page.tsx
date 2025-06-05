@@ -10,6 +10,8 @@ import SectionNavigation from '../components/SectionNavigation'
 import SectionIndicator from '../components/SectionIndicator'
 import MorphingBlobs from '../components/MorphingBlobs'
 import AboutSection from '../components/AboutSection'
+import Timeline from '../components/Timeline'
+import ProfessionalExperience from '../components/ProfessionalExperience'
 
 const sections = ['hero', 'about', 'experience', 'skills', 'education', 'projects']
 
@@ -176,7 +178,7 @@ export default function Home() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-gray-50 dark:from-[#0A1612] dark:to-[#0F1F1B] overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#0A1612] to-[#1a1f2c] overflow-hidden">
       <SectionNavigation
         onPrevious={handlePrevious}
         onNext={handleNext}
@@ -191,7 +193,7 @@ export default function Home() {
       />
 
       {/* Hero Section */}
-      <section id="hero" style={sectionStyle(0)} className="relative min-h-screen overflow-hidden bg-gray-900">
+      <section id="hero" style={sectionStyle(0)} className="relative min-h-screen overflow-hidden bg-[#0A1612]">
         {/* Morphing Blobs Background */}
         {currentSection === 0 && (
           <div className="absolute inset-0 w-full h-full overflow-hidden">
@@ -225,7 +227,7 @@ export default function Home() {
               transition={{ delay: 0.4, duration: 0.4 }}
               className="text-2xl sm:text-3xl font-medium text-white/90"
             >
-              Software Engineer
+              Full-Stack Engineer
               <span className="inline-block ml-2 animate-pulse">|</span>
             </motion.h2>
           </motion.div>
@@ -311,54 +313,8 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" style={sectionStyle(2)} className="flex items-center justify-center px-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: currentSection === 2 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="section-title mb-6">Professional Experience</h2>
-            <div className="space-y-4">
-              <ExperienceItem
-                title="Information Security and Governance Intern"
-                company="Mettler Toledo"
-                period="June 2023 – August 2023"
-                location="Columbus, OH"
-                description={[
-                  "Developed Security team MS Sharepoint pages to provide transparency to the organization's security statistics",
-                  "Identified aging vulnerabilities in our environment through Tenable that were older than 90 days",
-                  "Monitored Security ticket queue and resolved tickets, including website unblocking requests and CrowdStrike incidents"
-                ]}
-                index={0}
-              />
-              <ExperienceItem
-                title="Information Security and Governance Intern"
-                company="Mettler Toledo"
-                period="June 2022 – August 2022"
-                location="Columbus, OH"
-                description={[
-                  "Reviewed possible malicious emails and blocked malicious URLs",
-                  "Monitored SecurityScorecard and Black Kite to remediate cyber exposure issues",
-                  "Created digestible graphs from SOC statistics for leadership presentations"
-                ]}
-                index={1}
-              />
-              <ExperienceItem
-                title="Customer Service Representative"
-                company="Kroger"
-                period="June 2017 – January 2022"
-                location="Westerville, Ohio"
-                description={[
-                  "Progressed from Bagger to Customer Service Representative",
-                  "Managed multiple responsibilities including people management",
-                  "Developed strong interpersonal skills through customer service"
-                ]}
-                index={2}
-              />
-            </div>
-          </motion.div>
-        </div>
+      <section id="experience" style={sectionStyle(2)}>
+        <ProfessionalExperience isVisible={currentSection === 2} currentSection={currentSection} />
       </section>
 
       {/* Skills Section */}

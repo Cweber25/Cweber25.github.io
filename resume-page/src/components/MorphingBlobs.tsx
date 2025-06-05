@@ -78,7 +78,7 @@ export default function MorphingBlobs() {
   if (!isClient || blobPaths.length === 0) {
     return (
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 to-gray-800/50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A1612]/80 to-[#1a1f2c]/80" />
       </div>
     )
   }
@@ -86,11 +86,11 @@ export default function MorphingBlobs() {
   return (
     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
       {/* Dark background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-gray-800/80" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0A1612]/90 to-[#1a1f2c]/90" />
       
       <svg
         viewBox="-300 -300 600 600"
-        className="absolute w-full h-full opacity-30"
+        className="absolute w-full h-full opacity-40"
         preserveAspectRatio="xMidYMid slice"
         style={{ 
           filter: 'blur(30px)',
@@ -100,8 +100,8 @@ export default function MorphingBlobs() {
       >
         <defs>
           <radialGradient id="blob-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stopColor="rgba(255, 255, 255, 0.2)" />
-            <stop offset="100%" stopColor="rgba(255, 255, 255, 0.1)" />
+            <stop offset="0%" stopColor="rgba(61, 75, 97, 0.3)" />
+            <stop offset="100%" stopColor="rgba(26, 31, 44, 0.2)" />
           </radialGradient>
         </defs>
         {/* Background blobs */}
@@ -122,7 +122,7 @@ export default function MorphingBlobs() {
                 repeatType: "reverse",
                 delay: index * 2
               }}
-              fill={index === 0 ? "url(#blob-gradient)" : `rgba(255, 255, 255, ${0.1 - index * 0.02})`}
+              fill={index === 0 ? "url(#blob-gradient)" : `rgba(61, 75, 97, ${0.2 - index * 0.05})`}
               style={{ 
                 transformOrigin: 'center',
                 willChange: 'transform',
