@@ -18,13 +18,24 @@ export default function MorphingBlobs() {
       return x - Math.floor(x)
     }
     
-    for (let i = 0; i < pointCount; i++) {
-      const angle = i * angleStep
-      const randRadius = radius + (seededRandom(seed + i) - 0.5) * randomness
-      points.push({
-        x: Math.cos(angle) * randRadius,
-        y: Math.sin(angle) * randRadius
-      })
+    try {
+      for (let i = 0; i < pointCount; i++) {
+        const angle = i * angleStep
+        const randRadius = radius + (seededRandom(seed + i) - 0.5) * randomness
+        points.push({
+          x: Math.cos(angle) * randRadius,
+          y: Math.sin(angle) * randRadius
+        })
+      }
+    } catch (error) {
+      // Fallback to a simple circle if point generation fails
+      for (let i = 0; i < pointCount; i++) {
+        const angle = i * angleStep
+        points.push({
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius
+        })
+      }
     }
     
     return points
@@ -41,6 +52,12 @@ export default function MorphingBlobs() {
       for (let i = 0; i < points.length; i++) {
         const currentPoint = points[i]
         const nextPoint = points[(i + 1) % points.length]
+        
+        // Ensure points are valid numbers
+        if (isNaN(currentPoint.x) || isNaN(currentPoint.y) || isNaN(nextPoint.x) || isNaN(nextPoint.y)) {
+          throw new Error('Invalid point coordinates')
+        }
+        
         const midPoint = {
           x: ((currentPoint.x + nextPoint.x) / 2).toFixed(2),
           y: ((currentPoint.y + nextPoint.y) / 2).toFixed(2)
@@ -50,8 +67,9 @@ export default function MorphingBlobs() {
       
       return path + ' Z'
     } catch (error) {
-      console.warn('Error generating blob path:', error)
-      return 'M 0 0 Z'
+      // Return a simple circle path as fallback
+      const radius = 200
+      return `M ${radius} 0 A ${radius} ${radius} 0 1 1 ${-radius} 0 A ${radius} ${radius} 0 1 1 ${radius} 0 Z`
     }
   }
 
@@ -59,19 +77,33 @@ export default function MorphingBlobs() {
   useEffect(() => {
     setIsClient(true)
     
-    const blobs = []
-    // Reduced to 2 blobs for better performance
-    for (let i = 0; i < 2; i++) {
-      const seed1 = i * 100
-      const seed2 = i * 100 + 50
-      const initialPoints = generateBlobPoints(8, 200, 100, seed1)
-      const targetPoints = generateBlobPoints(8, 200, 100, seed2)
-      blobs.push({
-        initial: generateBlobPath(initialPoints),
-        target: generateBlobPath(targetPoints)
-      })
+    try {
+      const blobs = []
+      // Reduced to 2 blobs for better performance
+      for (let i = 0; i < 2; i++) {
+        const seed1 = i * 100
+        const seed2 = i * 100 + 50
+        const initialPoints = generateBlobPoints(8, 200, 100, seed1)
+        const targetPoints = generateBlobPoints(8, 200, 100, seed2)
+        blobs.push({
+          initial: generateBlobPath(initialPoints),
+          target: generateBlobPath(targetPoints)
+        })
+      }
+      setBlobPaths(blobs)
+    } catch (error) {
+      // Fallback to simple circles if blob generation fails
+      setBlobPaths([
+        {
+          initial: 'M 200 0 A 200 200 0 1 1 -200 0 A 200 200 0 1 1 200 0 Z',
+          target: 'M 210 0 A 210 210 0 1 1 -210 0 A 210 210 0 1 1 210 0 Z'
+        },
+        {
+          initial: 'M 180 0 A 180 180 0 1 1 -180 0 A 180 180 0 1 1 180 0 Z',
+          target: 'M 190 0 A 190 190 0 1 1 -190 0 A 190 190 0 1 1 190 0 Z'
+        }
+      ])
     }
-    setBlobPaths(blobs)
   }, [])
 
   // Don't render the animated content until client-side to avoid hydration mismatch

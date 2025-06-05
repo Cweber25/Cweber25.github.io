@@ -1,19 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useRef, createContext, useContext, useState } from 'react'
-import SkillCategories from './SkillCategories'
-import AnimatedSection from './AnimatedSection'
-import CircuitBackground from './CircuitBackground'
+import { useEffect, useRef, useState } from 'react'
+import SkillCategories from '../skills/SkillCategories'
+import CircuitBackground from '../ui/CircuitBackground'
+import { SkillsSectionContext } from '../skills/SkillsContext'
 
 interface TechnicalSkillsSectionProps {
   isVisible: boolean;
 }
-
-// Create a context to share the visibility state
-export const SkillsSectionContext = createContext<{
-  isVisible: boolean;
-}>({ isVisible: true })
 
 export default function TechnicalSkillsSection({ isVisible }: TechnicalSkillsSectionProps) {
   const [isClient, setIsClient] = useState(false)

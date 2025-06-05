@@ -3,16 +3,17 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
 import { BriefcaseIcon, CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
-import ResumeSection from '../components/ResumeSection'
-import ExperienceItem from '../components/ExperienceItem'
-import SkillItem from '../components/SkillItem'
-import SectionNavigation from '../components/SectionNavigation'
-import SectionIndicator from '../components/SectionIndicator'
-import MorphingBlobs from '../components/MorphingBlobs'
-import AboutSection from '../components/AboutSection'
-import Timeline from '../components/Timeline'
-import ProfessionalExperience from '../components/ProfessionalExperience'
-import TechnicalSkillsSection from '../components/TechnicalSkillsSection'
+import ResumeSection from '../components/layout/ResumeSection'
+import ExperienceItem from '../components/experience/ExperienceItem'
+import SkillItem from '../components/skills/SkillItem'
+import SectionNavigation from '../components/layout/SectionNavigation'
+import SectionIndicator from '../components/layout/SectionIndicator'
+import MorphingBlobs from '../components/ui/MorphingBlobs'
+import AboutSection from '../components/sections/AboutSection'
+import Timeline from '../components/experience/Timeline'
+import ProfessionalExperience from '../components/experience/ProfessionalExperience'
+import TechnicalSkillsSection from '../components/sections/TechnicalSkillsSection'
+import ProjectCard from '../components/projects/ProjectCard'
 
 const sections = ['hero', 'about', 'experience', 'skills', 'projects']
 
@@ -29,6 +30,45 @@ const skills = [
   { name: 'Information Security', level: 80 },
   { name: 'Problem Solving', level: 90 },
   { name: 'Team Leadership', level: 85 }
+]
+
+const projects = [
+  {
+    title: "Ludum Dare 50 Game Jam",
+    description: "Collaborated in a team of five to develop a game during a weekend game jam. Worked as one of two programmers alongside an artist and two sound designers. The game features unique mechanics and received positive feedback from the community.",
+    projectLink: "https://ldjam.com/events/ludum-dare/50/honored-execution",
+    githubLink: "https://github.com/yourusername/ludum-dare-50",
+    technologies: [
+      { name: "Unity", color: "#00FF00" },
+      { name: "C#", color: "#178600" },
+      { name: "Game Design", color: "#FF4B4B" }
+    ],
+    imageUrl: "/images/headshot.jpg"
+  },
+  {
+    title: "Mini Sorry",
+    description: "Developed a board game simulation for a professor to run large-scale data collection. Implemented progressive rule updates throughout the summer. Features an AI opponent and detailed game statistics tracking.",
+    projectLink: "https://github.com/Cweber25/Mini-Sorry",
+    githubLink: "https://github.com/Cweber25/Mini-Sorry",
+    technologies: [
+      { name: "Python", color: "#3776AB" },
+      { name: "Pygame", color: "#FFD43B" },
+      { name: "AI", color: "#FF6B6B" }
+    ],
+    imageUrl: "/images/headshot.jpg"
+  },
+  {
+    title: "Sojourn Medical",
+    description: "Designed and implemented a prototype hospital scheduling website using HTML, CSS, JavaScript, and SQL. Features MySQL database integration for user and doctor data management, appointment scheduling, and secure authentication.",
+    projectLink: "https://github.com/Cweber25/Sojourn",
+    githubLink: "https://github.com/Cweber25/Sojourn",
+    technologies: [
+      { name: "JavaScript", color: "#F7DF1E" },
+      { name: "MySQL", color: "#4479A1" },
+      { name: "HTML/CSS", color: "#E34F26" }
+    ],
+    imageUrl: "/images/headshot.jpg"
+  }
 ]
 
 export default function Home() {
@@ -332,47 +372,13 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="section-title mb-6">Featured Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                {
-                  title: "Ludum Dare 50 Game Jam",
-                  description: "Collaborated in a team of five to develop a game during a weekend game jam. Worked as one of two programmers alongside an artist and two sound designers.",
-                  link: "https://ldjam.com/events/ludum-dare/50/honored-execution"
-                },
-                {
-                  title: "Mini Sorry",
-                  description: "Developed a board game simulation for a professor to run large-scale data collection. Implemented progressive rule updates throughout the summer.",
-                  link: "https://github.com/Cweber25/Mini-Sorry"
-                },
-                {
-                  title: "Sojourn Medical",
-                  description: "Designed and implemented a prototype hospital scheduling website using HTML, CSS, JavaScript, and SQL. Features MySQL database integration for user and doctor data management.",
-                  link: "https://github.com/Cweber25/Sojourn"
-                }
-              ].map((project, index) => (
-                <motion.div
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project, index) => (
+                <ProjectCard
                   key={project.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 rounded-xl"
-                >
-                  <h3 className="text-xl font-bold text-high-contrast mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-medium-contrast mb-4">
-                    {project.description}
-                  </p>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center link-hover"
-                  >
-                    View Project
-                    <LinkIcon className="h-4 w-4 ml-1" />
-                  </a>
-                </motion.div>
+                  {...project}
+                  index={index}
+                />
               ))}
             </div>
           </motion.div>

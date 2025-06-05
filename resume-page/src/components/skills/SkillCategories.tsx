@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useContext } from 'react'
 import SkillCategory from './SkillCategory'
-import { SkillsSectionContext } from './TechnicalSkillsSection'
+import { SkillsSectionContext } from './SkillsContext'
 
 // Example skill data structure - you can modify this based on your actual skills
 const skillCategories = [
