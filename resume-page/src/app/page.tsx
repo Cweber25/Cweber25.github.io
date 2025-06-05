@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
-import { BriefcaseIcon, AcademicCapIcon, CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
+import { BriefcaseIcon, CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
 import ResumeSection from '../components/ResumeSection'
 import ExperienceItem from '../components/ExperienceItem'
 import SkillItem from '../components/SkillItem'
@@ -12,8 +12,9 @@ import MorphingBlobs from '../components/MorphingBlobs'
 import AboutSection from '../components/AboutSection'
 import Timeline from '../components/Timeline'
 import ProfessionalExperience from '../components/ProfessionalExperience'
+import TechnicalSkillsSection from '../components/TechnicalSkillsSection'
 
-const sections = ['hero', 'about', 'experience', 'skills', 'education', 'projects']
+const sections = ['hero', 'about', 'experience', 'skills', 'projects']
 
 const skills = [
   { name: 'Java', level: 90 },
@@ -319,63 +320,15 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" style={sectionStyle(3)} className="flex items-center justify-center px-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: currentSection === 3 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full"
-          >
-            <h2 className="section-title mb-6">Technical Skills</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto pr-2">
-              {skills.map((skill, index) => (
-                <SkillItem
-                  key={skill.name}
-                  name={skill.name}
-                  level={skill.level}
-                  index={index}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </div>
+        <TechnicalSkillsSection isVisible={currentSection === 3} />
       </section>
 
-      {/* Education Section */}
-      <section id="education" style={sectionStyle(4)} className="flex items-center justify-center px-16">
+      {/* Projects Section */}
+      <section id="projects" style={sectionStyle(4)} className="flex items-center justify-center px-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: currentSection === 4 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="section-title mb-6">Education</h2>
-            <div className="card p-6 rounded-xl">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-high-contrast mb-2">
-                    Bachelor of Science in Computer Science
-                  </h3>
-                  <p className="text-lg font-semibold accent-gradient">Ashland University</p>
-                  <p className="text-medium-contrast mt-2">Major: Computer Science</p>
-                  <p className="text-medium-contrast">Minor: Cyber Security</p>
-                </div>
-                <div className="mt-4 md:mt-0 text-right">
-                  <p className="text-medium-contrast">Expected Graduation</p>
-                  <p className="text-high-contrast font-medium">May 2024</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" style={sectionStyle(5)} className="flex items-center justify-center px-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: currentSection === 5 ? 1 : 0 }}
             transition={{ duration: 0.5 }}
           >
             <h2 className="section-title mb-6">Featured Projects</h2>
