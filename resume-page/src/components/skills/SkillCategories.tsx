@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useContext } from 'react'
 import SkillCategory from './SkillCategory'
-import { SkillsSectionContext } from './TechnicalSkillsSection'
+import { SkillsSectionContext } from './SkillsContext'
 
 // Example skill data structure - you can modify this based on your actual skills
 const skillCategories = [
@@ -10,10 +10,10 @@ const skillCategories = [
     title: 'Frontend Development',
     description: 'Building responsive and interactive user interfaces',
     skills: [
-      { name: 'React', level: 90 },
-      { name: 'TypeScript', level: 85 },
+      { name: 'React', level: 80 },
+      { name: 'TypeScript', level: 90 },
       { name: 'Next.js', level: 85 },
-      { name: 'Tailwind CSS', level: 90 },
+      { name: 'Tailwind CSS', level: 75 },
     ],
   },
   {
@@ -21,7 +21,7 @@ const skillCategories = [
     description: 'Server-side applications and API development',
     skills: [
       { name: 'Node.js', level: 85 },
-      { name: 'Python', level: 80 },
+      { name: 'Python', level: 90 },
       { name: 'SQL', level: 75 },
       { name: 'REST APIs', level: 85 },
     ],
@@ -31,9 +31,9 @@ const skillCategories = [
     description: 'Development operations and tooling',
     skills: [
       { name: 'Git', level: 90 },
-      { name: 'Docker', level: 75 },
+      { name: 'Docker', level: 50 },
       { name: 'CI/CD', level: 70 },
-      { name: 'AWS', level: 65 },
+      { name: 'AWS', level: 40 },
     ],
   },
   {
@@ -41,9 +41,9 @@ const skillCategories = [
     description: 'Infrastructure and workflow automation tools',
     skills: [
       { name: 'GitHub Actions', level: 85 },
-      { name: 'Ansible', level: 75 },
-      { name: 'Shell Scripting', level: 80 },
-      { name: 'Jenkins', level: 70 },
+      { name: 'Ansible', level: 85 },
+      { name: 'Shell Scripting', level: 70 },
+      { name: 'Jenkins', level: 85 },
     ],
   },
   {
@@ -51,10 +51,10 @@ const skillCategories = [
     description: 'Currently exploring and learning AI technologies',
     inProgress: true,
     skills: [
-      { name: 'LangChain', level: 60, inProgress: true },
-      { name: 'OpenAI API', level: 65, inProgress: true },
-      { name: 'Prompt Engineering', level: 70, inProgress: true },
-      { name: 'Vector Databases', level: 55, inProgress: true },
+      { name: 'LangChain', level: 15, inProgress: true },
+      { name: 'OpenAI API', level: 50, inProgress: true },
+      { name: 'Prompt TensorFlow', level: 40, inProgress: true },
+      { name: 'Vector Databases', level: 20, inProgress: true },
     ],
   },
 ]

@@ -3,16 +3,17 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
 import { BriefcaseIcon, CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
-import ResumeSection from '../components/ResumeSection'
-import ExperienceItem from '../components/ExperienceItem'
-import SkillItem from '../components/SkillItem'
-import SectionNavigation from '../components/SectionNavigation'
-import SectionIndicator from '../components/SectionIndicator'
-import MorphingBlobs from '../components/MorphingBlobs'
-import AboutSection from '../components/AboutSection'
-import Timeline from '../components/Timeline'
-import ProfessionalExperience from '../components/ProfessionalExperience'
-import TechnicalSkillsSection from '../components/TechnicalSkillsSection'
+import ResumeSection from '../components/layout/ResumeSection'
+import ExperienceItem from '../components/experience/ExperienceItem'
+import SkillItem from '../components/skills/SkillItem'
+import SectionNavigation from '../components/layout/SectionNavigation'
+import SectionIndicator from '../components/layout/SectionIndicator'
+import MorphingBlobs from '../components/ui/MorphingBlobs'
+import AboutSection from '../components/sections/AboutSection'
+import Timeline from '../components/experience/Timeline'
+import ProfessionalExperience from '../components/experience/ProfessionalExperience'
+import TechnicalSkillsSection from '../components/sections/TechnicalSkillsSection'
+import ProjectsSection from '../components/sections/ProjectsSection'
 
 const sections = ['hero', 'about', 'experience', 'skills', 'projects']
 
@@ -325,58 +326,7 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" style={sectionStyle(4)} className="flex items-center justify-center px-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: currentSection === 4 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="section-title mb-6">Featured Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                {
-                  title: "Ludum Dare 50 Game Jam",
-                  description: "Collaborated in a team of five to develop a game during a weekend game jam. Worked as one of two programmers alongside an artist and two sound designers.",
-                  link: "https://ldjam.com/events/ludum-dare/50/honored-execution"
-                },
-                {
-                  title: "Mini Sorry",
-                  description: "Developed a board game simulation for a professor to run large-scale data collection. Implemented progressive rule updates throughout the summer.",
-                  link: "https://github.com/Cweber25/Mini-Sorry"
-                },
-                {
-                  title: "Sojourn Medical",
-                  description: "Designed and implemented a prototype hospital scheduling website using HTML, CSS, JavaScript, and SQL. Features MySQL database integration for user and doctor data management.",
-                  link: "https://github.com/Cweber25/Sojourn"
-                }
-              ].map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card p-6 rounded-xl"
-                >
-                  <h3 className="text-xl font-bold text-high-contrast mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-medium-contrast mb-4">
-                    {project.description}
-                  </p>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center link-hover"
-                  >
-                    View Project
-                    <LinkIcon className="h-4 w-4 ml-1" />
-                  </a>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+        <ProjectsSection isVisible={currentSection === 4} />
       </section>
     </div>
   )

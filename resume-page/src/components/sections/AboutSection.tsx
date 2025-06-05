@@ -9,6 +9,48 @@ interface AboutSectionProps {
   isVisible: boolean;
 }
 
+// Text animation variants
+const textVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+}
+
+const textContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: (i = 1) => ({
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.02 * i },
+  }),
+}
+
+const AnimatedText = ({ text, className }: { text: string, className?: string }) => {
+  return (
+    <motion.div
+      variants={textContainerVariants}
+      initial="hidden"
+      animate="visible"
+      className={className}
+    >
+      {text.split(' ').map((word, index) => (
+        <motion.span
+          key={index}
+          variants={textVariants}
+          className="inline-block mr-[0.25em]"
+          style={{ willChange: 'transform' }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.div>
+  )
+}
+
 const aboutCards = [
   {
     icon: AcademicCapIcon,
@@ -164,13 +206,27 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
             className="md:col-span-2 card p-8 rounded-xl flex flex-col"
             style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           >
-            <h3 className="text-3xl font-bold text-high-contrast mb-6">
-              Full-Stack Engineer & Security Enthusiast
-            </h3>
-            <p className="text-xl leading-relaxed text-medium-contrast mb-8">
-              I'm a Full Stack Engineer at CVS Health, currently part of the Infrastructure Software Engineering Program (ISEP). I focus on backend development and automation, building internal tools and scalable systems that streamline infrastructure workflows and enhance the developer experience. My work spans technologies like Python, GitHub Actions, and Ansible, with a strong emphasis on improving internal platforms. I'm especially passionate about creating solutions that reduce developer toil and enable teams to ship faster with confidence.            
-            </p>
-            <div className="flex flex-wrap gap-4">
+            {shouldAnimate && (
+              <>
+                <AnimatedText
+                  text="Full-Stack Engineer & Security Enthusiast"
+                  className="text-3xl font-bold text-high-contrast mb-6"
+                />
+                <AnimatedText
+                  text="I'm a Full Stack Engineer at CVS Health, currently part of the Infrastructure Software Engineering Program (ISEP). I focus on backend development and automation, building internal tools and scalable systems that streamline infrastructure workflows and enhance the developer experience. My work spans technologies like Python, GitHub Actions, and Ansible, with a strong emphasis on improving internal platforms. I'm especially passionate about creating solutions that reduce developer toil and enable teams to ship faster with confidence."
+                  className="text-xl leading-relaxed text-medium-contrast mb-8"
+                />
+              </>
+            )}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: shouldAnimate ? 1 : 0,
+                y: shouldAnimate ? 0 : 20 
+              }}
+              transition={{ duration: 0.2, delay: 0.4 }}
+              className="flex flex-wrap gap-4"
+            >
               <span className="px-4 py-2 bg-[#3d4b61]/20 text-white rounded-full text-base font-medium">
                 Software Development
               </span>
@@ -180,7 +236,7 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
               <span className="px-4 py-2 bg-[#3d4b61]/20 text-white rounded-full text-base font-medium">
                 Team Leadership
               </span>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
