@@ -226,7 +226,7 @@ export default function Home() {
               whileHover={{ scale: 1.02, translateY: -2 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              href="mailto:Cweber25Business@gmail.com"
+              href="mailto:Cweber8Business@gmail.com"
               className="bg-white hover:bg-gray-100 text-gray-900 px-6 py-3 rounded-full flex items-center text-lg font-medium shadow-lg hover:shadow-xl"
               style={{ willChange: 'transform' }}
             >
