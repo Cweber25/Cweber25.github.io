@@ -144,7 +144,7 @@ export default function ProjectCard({
 
           {/* Links */}
           <div 
-            className="flex gap-4 mt-auto" 
+            className="flex gap-3 mt-auto pt-4 border-t border-white/20" 
             onClick={handleLinkClick}
           >
             <a
@@ -152,11 +152,12 @@ export default function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               className={`
-                inline-flex items-center text-sm transition-all duration-300
-                ${isExpanded ? 'text-primary hover:text-primary/80' : 'link-hover'}
+                inline-flex items-center px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300
+                bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-600 hover:border-blue-700
+                shadow-lg hover:shadow-xl transform hover:scale-105
               `}
             >
-              <LinkIcon className="h-4 w-4 mr-1" />
+              <LinkIcon className="h-5 w-5 mr-2" />
               View Project
             </a>
             {githubLink && (
@@ -165,12 +166,13 @@ export default function ProjectCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`
-                  inline-flex items-center text-sm transition-all duration-300
-                  ${isExpanded ? 'text-primary hover:text-primary/80' : 'link-hover'}
+                  inline-flex items-center px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300
+                  bg-gray-800 hover:bg-gray-900 text-white border-2 border-gray-800 hover:border-gray-900
+                  shadow-lg hover:shadow-xl transform hover:scale-105
                 `}
               >
-                <CodeBracketIcon className="h-4 w-4 mr-1" />
-                Source Code
+                <CodeBracketIcon className="h-5 w-5 mr-2" />
+                GitHub
               </a>
             )}
           </div>

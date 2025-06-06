@@ -18,7 +18,7 @@ export const projects: Project[] = [
     title: "Ludum Dare 50 Game Jam",
     description: "Collaborated in a team of five to develop a game during a weekend game jam. Worked as one of two programmers alongside an artist and two sound designers. The game features unique mechanics and received positive feedback from the community.",
     projectLink: "https://ldjam.com/events/ludum-dare/50/honored-execution",
-    githubLink: "https://github.com/yourusername/ludum-dare-50",
+    githubLink: "https://github.com/chillprogrammer/ld-50",
     technologies: [
       { name: "JavaScript", color: "#00FF00" },
       { name: "TypeScript", color: "#178600" },
@@ -54,17 +54,17 @@ export const projects: Project[] = [
   },
   {
     title: "LifeLog",
-    description: "Comming soon",
-    projectLink: "",
-    githubLink: "",
+    description: "Coming soon",
+    projectLink: "https://github.com/Cweber25/LifeLog",
+    githubLink: "https://github.com/Cweber25/LifeLog",
     technologies: [
-      { name: "x", color: "#F7DF1E" },
-      { name: "xx", color: "#4479A1" },
-      { name: "xxx", color: "#E34F26" }
+      { name: "React", color: "#61DAFB" },
+      { name: "Node.js", color: "#339933" },
+      { name: "MongoDB", color: "#47A248" }
     ],
     imageUrl: "/images/lifelog.jpg",
     features: [
-      "Coming soon"
+      "Toming soon"
     ]
   }
 ]; 

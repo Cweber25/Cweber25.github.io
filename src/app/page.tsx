@@ -2,35 +2,16 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect, useCallback } from 'react'
-import { BriefcaseIcon, CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
-import ResumeSection from '../components/layout/ResumeSection'
-import ExperienceItem from '../components/experience/ExperienceItem'
-import SkillItem from '../components/skills/SkillItem'
+import { CodeBracketIcon, EnvelopeIcon, LinkIcon } from '@heroicons/react/24/outline'
 import SectionNavigation from '../components/layout/SectionNavigation'
 import SectionIndicator from '../components/layout/SectionIndicator'
 import MorphingBlobs from '../components/ui/MorphingBlobs'
 import AboutSection from '../components/sections/AboutSection'
-import Timeline from '../components/experience/Timeline'
 import ProfessionalExperience from '../components/experience/ProfessionalExperience'
 import TechnicalSkillsSection from '../components/sections/TechnicalSkillsSection'
 import ProjectsSection from '../components/sections/ProjectsSection'
 
 const sections = ['hero', 'about', 'experience', 'skills', 'projects']
-
-const skills = [
-  { name: 'Java', level: 90 },
-  { name: 'Python', level: 85 },
-  { name: 'JavaScript', level: 85 },
-  { name: 'Node.js', level: 80 },
-  { name: 'SQL', level: 80 },
-  { name: 'HTML/CSS', level: 85 },
-  { name: 'TypeScript', level: 80 },
-  { name: 'React', level: 85 },
-  { name: 'Git', level: 85 },
-  { name: 'Information Security', level: 80 },
-  { name: 'Problem Solving', level: 90 },
-  { name: 'Team Leadership', level: 85 }
-]
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
@@ -78,7 +59,7 @@ export default function Home() {
     if (currentSection < sections.length - 1) {
       navigateToSection(currentSection + 1)
     }
-  }, [currentSection, navigateToSection, sections.length])
+  }, [currentSection, navigateToSection])
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -94,7 +75,6 @@ export default function Home() {
   }, [handleNext, handlePrevious])
 
   useEffect(() => {
-    let lastScrollY = window.scrollY
     const scrollThreshold = 30
     const scrollCooldown = 400
 
@@ -310,22 +290,22 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" style={sectionStyle(1)} className="flex items-center justify-center px-16">
+      <section id="about" style={sectionStyle(1)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <AboutSection isVisible={currentSection === 1} />
       </section>
 
       {/* Experience Section */}
-      <section id="experience" style={sectionStyle(2)}>
+      <section id="experience" style={sectionStyle(2)} className="flex items-center justify-center">
         <ProfessionalExperience isVisible={currentSection === 2} currentSection={currentSection} />
       </section>
 
       {/* Skills Section */}
-      <section id="skills" style={sectionStyle(3)} className="flex items-center justify-center px-16">
+      <section id="skills" style={sectionStyle(3)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <TechnicalSkillsSection isVisible={currentSection === 3} />
       </section>
 
       {/* Projects Section */}
-      <section id="projects" style={sectionStyle(4)} className="flex items-center justify-center px-16">
+      <section id="projects" style={sectionStyle(4)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <ProjectsSection isVisible={currentSection === 4} />
       </section>
     </div>

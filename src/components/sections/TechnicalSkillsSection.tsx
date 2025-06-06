@@ -28,13 +28,13 @@ export default function TechnicalSkillsSection({ isVisible }: TechnicalSkillsSec
   // Don't render animations until client-side to avoid hydration mismatch
   if (!isClient) {
     return (
-      <div className="relative min-h-screen w-full">
+      <div className="relative w-full max-w-7xl mx-auto">
         <CircuitBackground />
         <div className="relative z-10 h-full py-8">
           <h2 className="text-3xl font-bold text-high-contrast mb-8 text-center">
             Technical Skills
           </h2>
-          <div className="overflow-y-auto px-4">
+          <div className="overflow-y-auto">
             <SkillCategories />
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function TechnicalSkillsSection({ isVisible }: TechnicalSkillsSec
   const shouldAnimate = isClient && isVisible
 
   return (
-    <div ref={sectionRef} className="relative min-h-screen w-full">
+    <div ref={sectionRef} className="relative w-full max-w-7xl mx-auto">
       <CircuitBackground />
       <SkillsSectionContext.Provider value={{ isVisible: shouldAnimate }}>
         <motion.div
@@ -70,7 +70,7 @@ export default function TechnicalSkillsSection({ isVisible }: TechnicalSkillsSec
             Technical Skills
           </motion.h2>
           <motion.div 
-            className="overflow-y-auto px-4"
+            className="overflow-y-auto"
             initial={false}
             animate={{ 
               opacity: shouldAnimate ? 1 : 0,

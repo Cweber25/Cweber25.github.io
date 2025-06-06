@@ -47,21 +47,22 @@ const experiences = [
 
 export default function ProfessionalExperience({ isVisible, currentSection }: ProfessionalExperienceProps) {
   return (
-    <section id="experience" className="flex items-center justify-center px-8">
-      <div className="w-full">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isVisible ? 1 : 0 }}
-          transition={{ duration: 0.5 }}
-          className="py-12"
-        >
-          <h2 className="section-title mb-16">Professional Experience</h2>
-          <Timeline
-            isVisible={isVisible}
-            experiences={experiences}
-          />
-        </motion.div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-full"
+    >
+      {/* Title container - constrained width */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="section-title mb-16">Professional Experience</h2>
       </div>
-    </section>
+      
+      {/* Timeline - full width */}
+      <Timeline
+        isVisible={isVisible}
+        experiences={experiences}
+      />
+    </motion.div>
   )
 } 

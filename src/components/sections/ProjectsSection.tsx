@@ -11,14 +11,14 @@ interface ProjectsSectionProps {
 
 export default function ProjectsSection({ isVisible }: ProjectsSectionProps) {
   return (
-    <div className="relative flex items-center justify-center px-16">
+    <div className="relative w-full max-w-7xl mx-auto">
       {/* Background container - positioned behind everything */}
       <div className="fixed inset-0 w-full">
         <DynamicWaves />
       </div>
 
       {/* Content container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto">
+      <div className="relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: isVisible ? 1 : 0 }}

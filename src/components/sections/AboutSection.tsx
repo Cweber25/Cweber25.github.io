@@ -96,7 +96,7 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
   // Don't render animations until client-side to avoid hydration mismatch
   if (!isClient) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full max-w-7xl mx-auto">
         <div>
           <h2 className="section-title mb-6">About Me</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -159,7 +159,7 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
   const shouldAnimate = isClient && isVisible
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" ref={sectionRef}>
+    <div className="w-full max-w-7xl mx-auto" ref={sectionRef}>
       <motion.div
         initial={false}
         animate={{ 
