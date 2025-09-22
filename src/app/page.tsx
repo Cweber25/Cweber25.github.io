@@ -7,11 +7,12 @@ import SectionNavigation from '../components/layout/SectionNavigation'
 import SectionIndicator from '../components/layout/SectionIndicator'
 import MorphingBlobs from '../components/ui/MorphingBlobs'
 import AboutSection from '../components/sections/AboutSection'
+import InternshipSection from '../components/sections/InternshipSection'
 import ProfessionalExperience from '../components/experience/ProfessionalExperience'
 import TechnicalSkillsSection from '../components/sections/TechnicalSkillsSection'
 import ProjectsSection from '../components/sections/ProjectsSection'
 
-const sections = ['hero', 'about', 'experience', 'skills', 'projects']
+const sections = ['hero', 'about', 'internships', 'experience', 'skills', 'projects']
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
@@ -294,19 +295,24 @@ export default function Home() {
         <AboutSection isVisible={currentSection === 1} />
       </section>
 
+      {/* Internships Section */}
+      <section id="internships" style={sectionStyle(2)} className="flex items-center justify-center">
+        <InternshipSection isVisible={currentSection === 2} />
+      </section>
+
       {/* Experience Section */}
-      <section id="experience" style={sectionStyle(2)} className="flex items-center justify-center">
-        <ProfessionalExperience isVisible={currentSection === 2} currentSection={currentSection} />
+      <section id="experience" style={sectionStyle(3)} className="flex items-center justify-center">
+        <ProfessionalExperience isVisible={currentSection === 3} currentSection={currentSection} />
       </section>
 
       {/* Skills Section */}
-      <section id="skills" style={sectionStyle(3)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <TechnicalSkillsSection isVisible={currentSection === 3} />
+      <section id="skills" style={sectionStyle(4)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <TechnicalSkillsSection isVisible={currentSection === 4} />
       </section>
 
       {/* Projects Section */}
-      <section id="projects" style={sectionStyle(4)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <ProjectsSection isVisible={currentSection === 4} />
+      <section id="projects" style={sectionStyle(5)} className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <ProjectsSection isVisible={currentSection === 5} />
       </section>
     </div>
   )
