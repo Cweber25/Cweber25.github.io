@@ -8,9 +8,10 @@ interface SkillItemProps {
   level: number
   index: number
   inProgress?: boolean
+  isVisible?: boolean
 }
 
-export default function SkillItem({ name, level, index, inProgress = false }: SkillItemProps) {
+export default function SkillItem({ name, level, index, inProgress = false, isVisible = true }: SkillItemProps) {
   const [animatedLevel, setAnimatedLevel] = useState(0)
   const [isClient, setIsClient] = useState(false)
   
@@ -21,13 +22,13 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
     setIsClient(true)
   }, [])
 
-  // Start animations when component mounts
+  // Start animations when component becomes visible
   useEffect(() => {
-    if (!isClient) return
+    if (!isClient || !isVisible) return
 
-    // Animate the level number counting up
-    const duration = 1500 // 1.5 seconds
-    const steps = 60 // Update 60 times during the animation
+    // Animate the level number counting up (faster and smoother)
+    const duration = 800 // Reduced from 1.5s to 0.8s
+    const steps = 30 // Reduced from 60 to 30 steps
     const stepDuration = duration / steps
     let currentStep = 0
 
@@ -43,7 +44,7 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
     }, stepDuration)
 
     return () => clearInterval(timer)
-  }, [level, isClient])
+  }, [level, isClient, isVisible])
 
   // Calculate points for hexagon
   const size = 60
@@ -65,14 +66,14 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
     return `${x},${y}`
   }).join(' ')
 
-  // Generate particles
+  // Generate particles (reduced complexity)
   const particles = useMemo(() => {
-    const particleCount = Math.floor(level / 10) // 1 particle per 10% skill level
+    const particleCount = Math.min(Math.floor(level / 20), 4) // Max 4 particles, 1 per 20% skill level
     return Array.from({ length: particleCount }).map((_, i) => ({
       id: i,
       angle: (Math.PI * 2 * i) / particleCount,
-      speed: Math.random() * 0.5 + 0.5,
-      delay: Math.random() * 2
+      speed: 1, // Fixed speed instead of random
+      delay: i * 0.5 // Staggered delay instead of random
     }))
   }, [level])
 
@@ -97,16 +98,12 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
   }
 
   return (
-    <motion.div
-      initial={false}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+    <div
       className={`
         bg-[#1a1f2c]/80 backdrop-blur-sm rounded-lg p-4 shadow-lg hover:shadow-xl 
         transition-all duration-300 border border-[#3d4b61]/20
         ${inProgress ? 'border-[#3d4b61]/40' : ''}
       `}
-      style={{ willChange: 'transform', transform: 'translateZ(0)' }}
     >
       <div className="flex items-center gap-4">
         <div className="relative w-[60px] h-[60px] group">
@@ -127,35 +124,17 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
             {particles.map((particle) => (
               <motion.circle
                 key={particle.id}
-                initial={{ 
-                  cx: center,
-                  cy: center,
-                  opacity: 0 
-                }}
-                animate={{
-                  cx: [
-                    center,
-                    center + Math.cos(particle.angle) * radius * 1.2,
-                    center + Math.cos(particle.angle + Math.PI * 2) * radius * 1.2,
-                    center
-                  ],
-                  cy: [
-                    center,
-                    center + Math.sin(particle.angle) * radius * 1.2,
-                    center + Math.sin(particle.angle + Math.PI * 2) * radius * 1.2,
-                    center
-                  ],
-                  opacity: [0, 1, 1, 0]
-                }}
+                cx={center + Math.cos(particle.angle) * radius * 0.8}
+                cy={center + Math.sin(particle.angle) * radius * 0.8}
+                r={1.5}
+                fill={inProgress ? "#4a5d78" : "#3d4b61"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isVisible ? 0.6 : 0 }}
                 transition={{
-                  duration: 3 + particle.speed,
-                  repeat: Infinity,
-                  ease: "linear",
+                  duration: 0.5,
                   delay: particle.delay
                 }}
-                r={2}
-                fill={inProgress ? "#4a5d78" : "#3d4b61"}
-                className={`opacity-60 ${inProgress ? 'animate-pulse' : ''}`}
+                className={inProgress ? 'animate-pulse' : ''}
               />
             ))}
           </svg>
@@ -191,18 +170,11 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
           </svg>
           
           {/* Progress Hexagon */}
-          <motion.svg
+          <svg
             width={size}
             height={size}
             viewBox={`0 0 ${size} ${size}`}
             className="absolute inset-0"
-            initial={false}
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
           >
             <polygon
               points={progressPoints}
@@ -212,7 +184,7 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
               filter={`url(#${filterId})`}
               className={inProgress ? 'animate-pulse' : ''}
             />
-          </motion.svg>
+          </svg>
 
           {/* Percentage Text */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -227,9 +199,28 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
           </div>
         </div>
         <div className="flex-1">
-          <h3 className="text-high-contrast font-medium">{name}</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-high-contrast font-medium">{name}</h3>
+            {inProgress && (
+              <motion.span 
+                className="px-2 py-0.5 text-xs font-medium bg-[#4a5d78]/30 rounded-full text-high-contrast border border-[#4a5d78]/40"
+                animate={{
+                  opacity: [0.7, 1, 0.7],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut"
+                }}
+              >
+                Learning
+              </motion.span>
+            )}
+          </div>
           <motion.div 
-            className="h-0.5 bg-[#3d4b61]/20 mt-1"
+            className={`h-0.5 mt-1 ${inProgress ? 'bg-[#4a5d78]/40' : 'bg-[#3d4b61]/20'}`}
             style={{
               scaleX: animatedLevel / 100,
               transformOrigin: "left"
@@ -237,6 +228,6 @@ export default function SkillItem({ name, level, index, inProgress = false }: Sk
           />
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 } 
