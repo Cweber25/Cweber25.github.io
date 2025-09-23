@@ -62,9 +62,9 @@ export const projects: Project[] = [
       { name: "Node.js", color: "#339933" },
       { name: "MongoDB", color: "#47A248" }
     ],
-    imageUrl: "/images/lifelog.jpg",
+    imageUrl: "/images/mini-sorry.jpg", // Placeholder until LifeLog image is available
     features: [
-      "Toming soon"
+      "Coming soon"
     ]
   }
 ]; 
