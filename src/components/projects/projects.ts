@@ -55,8 +55,8 @@ export const projects: Project[] = [
   {
     title: "LifeLog",
     description: "Coming soon",
-    projectLink: "https://github.com/Cweber25/LifeLog",
-    githubLink: "https://github.com/Cweber25/LifeLog",
+    projectLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    githubLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     technologies: [
       { name: "React", color: "#61DAFB" },
       { name: "Node.js", color: "#339933" },
