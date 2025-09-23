@@ -10,51 +10,60 @@ const skillCategories = [
     title: 'Frontend Development',
     description: 'Building responsive and interactive user interfaces',
     skills: [
-      { name: 'React', level: 80 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'Next.js', level: 85 },
-      { name: 'Tailwind CSS', level: 75 },
+      { name: 'React', level: 85 },
+      { name: 'TypeScript', level: 85 },
+      { name: 'Next.js', level: 80 },
+      { name: 'Tailwind CSS', level: 80 },
+      { name: 'Framer Motion', level: 75 },
+      { name: 'JavaScript', level: 90 },
     ],
   },
   {
     title: 'Backend Development',
     description: 'Server-side applications and API development',
     skills: [
-      { name: 'Node.js', level: 85 },
       { name: 'Python', level: 90 },
-      { name: 'SQL', level: 75 },
+      { name: 'Spring Boot', level: 80 },
+      { name: 'Node.js', level: 75 },
+      { name: 'PostgreSQL', level: 50, inProgress: true },
       { name: 'REST APIs', level: 85 },
+      { name: 'GraphQL', level: 25, inProgress: true },
     ],
   },
   {
-    title: 'DevOps & Tools',
-    description: 'Development operations and tooling',
+    title: 'DevOps & Cloud',
+    description: 'Infrastructure, deployment, and cloud technologies',
     skills: [
       { name: 'Git', level: 90 },
-      { name: 'Docker', level: 50 },
-      { name: 'CI/CD', level: 70 },
-      { name: 'AWS', level: 40 },
+      { name: 'Docker', level: 60 },
+      { name: 'Kubernetes', level: 40, inProgress: true },
+      { name: 'AWS', level: 50, inProgress: true },
+      { name: 'Azure', level: 65 },
+      { name: 'Terraform', level: 45, inProgress: true },
     ],
   },
   {
-    title: 'Automation',
+    title: 'Automation & Tools',
     description: 'Infrastructure and workflow automation tools',
     skills: [
       { name: 'GitHub Actions', level: 85 },
       { name: 'Ansible', level: 85 },
-      { name: 'Shell Scripting', level: 70 },
-      { name: 'Jenkins', level: 85 },
+      { name: 'Shell Scripting', level: 60 },
+      { name: 'Jenkins', level: 90 },
+      { name: 'Temporal', level: 50, inProgress: true },
+      { name: 'Postman', level: 90 },
     ],
   },
   {
-    title: 'AI & Machine Learning',
-    description: 'Currently exploring and learning AI technologies',
-    inProgress: true,
+    title: 'Security & Governance',
+    description: 'Security tools and governance practices from internship experience',
     skills: [
-      { name: 'LangChain', level: 15, inProgress: true },
-      { name: 'OpenAI API', level: 50, inProgress: true },
-      { name: 'Prompt TensorFlow', level: 40, inProgress: true },
-      { name: 'Vector Databases', level: 20, inProgress: true },
+      { name: 'Tenable', level: 75 },
+      { name: 'SecurityScorecard', level: 70 },
+      { name: 'SharePoint Development', level: 80 },
+      { name: 'SOC Analysis', level: 70 },
+      { name: 'Vulnerability Management', level: 75 },
+      { name: 'Security Ticketing', level: 80 },
     ],
   },
 ]
@@ -108,7 +117,7 @@ export default function SkillCategories() {
           index={index}
           isExpanded={expandedCategory === category.title}
           onToggle={() => handleCategoryClick(category.title)}
-          inProgress={category.inProgress}
+          inProgress={false}
         />
       ))}
     </div>

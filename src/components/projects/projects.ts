@@ -26,11 +26,11 @@ export const projects: Project[] = [
     ],
     imageUrl: "/images/honoredExecution.jpg.png",
     features: [
-      "Unique game mechanics centered around time manipulation",
-      "Real-time physics-based gameplay and interactions",
-      "Original artwork and sound design by team members",
-      "Developed in 48 hours during game jam",
-      "Positive community feedback and ratings"
+      "Mouse-controlled sword combat with intuitive swing mechanics",
+      "Infinite wave survival gameplay against endless enemy spawns",
+      "Developed collaboratively in 48 hours for Ludum Dare game jam",
+      "Real-time action requiring precise timing and positioning",
+      "Highly rated by the community in many categories"
     ]
   },
   {
