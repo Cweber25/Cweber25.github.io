@@ -80,15 +80,17 @@ export default function ProfessionalExperience({ isVisible, currentSection }: Pr
       initial={{ opacity: 0 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+      className="w-full h-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col"
     >
-      <h2 className="section-title mb-12">Professional Experience</h2>
+      <h2 className="section-title mb-8 flex-shrink-0">Professional Experience</h2>
       
-      <CircularRotationWheel
-        program={rotationalProgram.program}
-        rotations={rotationalProgram.rotations}
-        isVisible={isVisible}
-      />
+      <div className="flex-1 flex items-center justify-center">
+        <CircularRotationWheel
+          program={rotationalProgram.program}
+          rotations={rotationalProgram.rotations}
+          isVisible={isVisible}
+        />
+      </div>
     </motion.div>
   )
 } 
