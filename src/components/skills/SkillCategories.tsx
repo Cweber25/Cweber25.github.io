@@ -78,32 +78,10 @@ export default function SkillCategories() {
 
   // Close all categories when section becomes invisible
   useEffect(() => {
-    if (!isVisible && expandedCategory) {
+    if (!isVisible) {
       setExpandedCategory(null)
     }
-  }, [isVisible, expandedCategory])
-
-  // Only scroll if the expanded content would be off-screen
-  useEffect(() => {
-    if (expandedCategory) {
-      const element = document.getElementById(`skill-category-${expandedCategory}`)
-      if (element) {
-        // Wait for the expansion animation to start
-        setTimeout(() => {
-          const rect = element.getBoundingClientRect()
-          const headerHeight = 120 // Height of sticky header
-          const viewportHeight = window.innerHeight
-          const elementBottom = rect.bottom
-          
-          // Only scroll if the bottom of the expanded category would be off-screen
-          if (elementBottom > viewportHeight) {
-            const scrollNeeded = elementBottom - viewportHeight + 40 // Add small padding
-            window.scrollBy({ top: scrollNeeded, behavior: 'smooth' })
-          }
-        }, 50)
-      }
-    }
-  }, [expandedCategory])
+  }, [isVisible])
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 pb-20">
