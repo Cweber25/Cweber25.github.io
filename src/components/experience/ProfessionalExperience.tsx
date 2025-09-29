@@ -5,7 +5,6 @@ import CircularRotationWheel from './CircularRotationWheel'
 
 interface ProfessionalExperienceProps {
   isVisible: boolean
-  currentSection: number
 }
 
 const rotationalProgram = {
@@ -74,7 +73,7 @@ const rotationalProgram = {
   ]
 }
 
-export default function ProfessionalExperience({ isVisible, currentSection }: ProfessionalExperienceProps) {
+export default function ProfessionalExperience({ isVisible }: ProfessionalExperienceProps) {
   return (
     <motion.div
       initial={{ opacity: 0 }}

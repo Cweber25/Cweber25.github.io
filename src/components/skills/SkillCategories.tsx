@@ -102,7 +102,6 @@ export default function SkillCategories() {
           index={index}
           isExpanded={expandedCategory === category.title}
           onToggle={() => handleCategoryClick(category.title)}
-          inProgress={false}
         />
       ))}
     </div>

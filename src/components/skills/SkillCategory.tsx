@@ -11,7 +11,6 @@ interface SkillCategoryProps {
   index: number
   isExpanded: boolean
   onToggle: () => void
-  inProgress?: boolean
 }
 
 export default function SkillCategory({ 
@@ -21,8 +20,7 @@ export default function SkillCategory({
   skills, 
   index,
   isExpanded,
-  onToggle,
-  inProgress = false
+  onToggle
 }: SkillCategoryProps) {
   return (
     <motion.div

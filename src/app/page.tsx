@@ -302,7 +302,7 @@ export default function Home() {
 
       {/* Experience Section */}
       <section id="experience" style={sectionStyle(3)} className="flex items-center justify-center">
-        <ProfessionalExperience isVisible={currentSection === 3} currentSection={currentSection} />
+        <ProfessionalExperience isVisible={currentSection === 3} />
       </section>
 
       {/* Skills Section */}
