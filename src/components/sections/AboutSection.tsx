@@ -92,7 +92,7 @@ export default function AboutSection({ isVisible }: AboutSectionProps) {
             </h3>
             
             <p className="text-xl leading-relaxed text-medium-contrast mb-8 hover:text-white transition-colors duration-200">
-              I'm a Full Stack Engineer at CVS Health, currently part of the Infrastructure Software Engineering Program (ISEP). I focus on backend development and automation, building internal tools and scalable systems that streamline infrastructure workflows and enhance the developer experience. My work spans technologies like Python, GitHub Actions, and Ansible, with a strong emphasis on improving internal platforms. I'm especially passionate about creating solutions that reduce developer toil and enable teams to ship faster with confidence.
+              I&apos;m a Full Stack Engineer at CVS Health, currently part of the Infrastructure Software Engineering Program (ISEP). I focus on backend development and automation, building internal tools and scalable systems that streamline infrastructure workflows and enhance the developer experience. My work spans technologies like Python, GitHub Actions, and Ansible, with a strong emphasis on improving internal platforms. I&apos;m especially passionate about creating solutions that reduce developer toil and enable teams to ship faster with confidence.
             </p>
             
             <div className="flex flex-wrap gap-4">

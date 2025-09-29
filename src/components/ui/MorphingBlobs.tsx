@@ -27,7 +27,7 @@ export default function MorphingBlobs() {
           y: Math.sin(angle) * randRadius
         })
       }
-    } catch (error) {
+    } catch {
       // Fallback to a simple circle if point generation fails
       for (let i = 0; i < pointCount; i++) {
         const angle = i * angleStep
@@ -66,7 +66,7 @@ export default function MorphingBlobs() {
       }
       
       return path + ' Z'
-    } catch (error) {
+    } catch {
       // Return a simple circle path as fallback
       const radius = 200
       return `M ${radius} 0 A ${radius} ${radius} 0 1 1 ${-radius} 0 A ${radius} ${radius} 0 1 1 ${radius} 0 Z`
@@ -91,7 +91,7 @@ export default function MorphingBlobs() {
         })
       }
       setBlobPaths(blobs)
-    } catch (error) {
+    } catch {
       // Fallback to simple circles if blob generation fails
       setBlobPaths([
         {
