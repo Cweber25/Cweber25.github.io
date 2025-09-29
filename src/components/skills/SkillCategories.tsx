@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext } from 'react'
 import SkillCategory from './SkillCategory'
 import { SkillsSectionContext } from './SkillsContext'
+import { trackSkillCategoryExpand } from '../../lib/analytics'
 
 // Example skill data structure - you can modify this based on your actual skills
 const skillCategories = [
@@ -73,7 +74,13 @@ export default function SkillCategories() {
   const { isVisible } = useContext(SkillsSectionContext)
 
   const handleCategoryClick = (title: string) => {
+    const isExpanding = expandedCategory !== title
     setExpandedCategory(expandedCategory === title ? null : title)
+    
+    // Track when a category is expanded (not collapsed)
+    if (isExpanding) {
+      trackSkillCategoryExpand(title)
+    }
   }
 
   // Close all categories when section becomes invisible
