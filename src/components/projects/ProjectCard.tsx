@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LinkIcon, CodeBracketIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useState } from 'react';
+import { trackProjectClick } from '../../lib/analytics';
 
 interface Technology {
   name: string;
@@ -151,6 +152,7 @@ export default function ProjectCard({
               href={projectLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackProjectClick(title, 'view')}
               className={`
                 inline-flex items-center px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300
                 bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-600 hover:border-blue-700
@@ -165,6 +167,7 @@ export default function ProjectCard({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackProjectClick(title, 'github')}
                 className={`
                   inline-flex items-center px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300
                   bg-gray-800 hover:bg-gray-900 text-white border-2 border-gray-800 hover:border-gray-900
