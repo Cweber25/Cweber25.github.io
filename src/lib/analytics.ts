@@ -8,11 +8,14 @@ declare global {
 
 export const trackEvent = (action: string, category: string, label?: string, value?: number) => {
   if (typeof window !== 'undefined' && window.gtag) {
+    console.log('📊 Tracking event:', { action, category, label, value });
     window.gtag('event', action, {
       event_category: category,
       event_label: label,
       value: value,
     });
+  } else {
+    console.warn('❌ gtag not available:', { window: typeof window, gtag: typeof window?.gtag });
   }
 };
 
